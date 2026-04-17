@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hawn | هَـون - منصة ذكية لإدارة للزيارات الطبية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: "RiwaaPro";
+      src: url("RiwaaPro-Regular.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-container">
+      <a href="#home" id="logo-home" class="logo" aria-label="العودة إلى الرئيسية">
+        <img src="Hawn_Logo.png" alt="Hawn Logo" class="logo-img">
+        <span class="logo-text">هـَـون</span>
+      </a>
+
+      <nav class="nav-links">
+        <button class="nav-btn active" data-section="home">الرئيسية</button>
+        <button class="nav-btn" data-section="about">عن هـَون</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <section id="home" class="section active">
+      <div class="home-content">
+        <div class="home-hero">
+          <div class="logo-large">
+            <img src="Hawn_Logo.png" alt="Hawn Logo" class="logo-img-large">
+          </div>
+          <h1 class="hero-title">هـَون</h1>
+          <p class="hero-description">
+            منصة ذكية تساعد المرضى على فهم زيارتهم الطبية من خلال تلخيص التشخيص والأدوية والتعليمات بطريقة واضحة وبسيطة.
+          </p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary" id="start-btn">ابدأ الآن</button>
+            <button class="btn btn-secondary" id="about-btn">عن هـَون</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="record-visit" class="section">
+      <div class="record-content">
+        <h2 class="section-title">تسجيل الزيارة</h2>
+
+        <div class="alert alert-info">
+          <span class="alert-icon">ℹ️</span>
+          <span>يرجى التأكد من موافقة الطبيب قبل التسجيل.</span>
+        </div>
+
+        <div class="alert alert-info alert-inline">
+          <span>🎤 ميزة تسجيل الصوت ستكون متاحة قريبًا</span>
+        </div>
+
+        <div class="record-section">
+          <p class="record-note">اكتب أو الصق سيناريو الجلسة الطبية لتوليد الملخص.</p>
+          <textarea
+            id="scenario-input"
+            class="scenario-input"
+            placeholder="اكتب أو الصق سيناريو الجلسة الطبية..."
+            rows="6"
+          ></textarea>
+
+          <button class="btn btn-record btn-large" id="generate-btn">
+            <span class="record-icon">📝</span>
+            توليد الملخص
+          </button>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-outline" id="back-home-record">العودة للرئيسية</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="processing" class="section">
+      <div class="processing-content">
+        <h2 class="section-title">جاري تحليل الزيارة...</h2>
+        <div class="spinner-container">
+          <div class="spinner"></div>
+        </div>
+        <p class="processing-note">قد يستغرق التحليل بضع ثوانٍ...</p>
+      </div>
+    </section>
+
+    <section id="summary" class="section">
+      <div class="summary-content">
+        <h2 class="section-title">ملخص الزيارة</h2>
+
+        <div class="summary-card">
+          <h3 class="card-title"><span class="card-icon">🏥</span> التشخيص</h3>
+          <div class="card-content">
+            <p class="diagnosis-text" id="diagnosis-content"></p>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <h3 class="card-title"><span class="card-icon">💊</span> الأدوية</h3>
+          <div class="card-content" id="medications-content"></div>
+        </div>
+
+        <div class="summary-card">
+          <h3 class="card-title"><span class="card-icon">📝</span> التعليمات والنصائح</h3>
+          <div class="card-content">
+            <ul class="instructions-list" id="instructions-content"></ul>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <h3 class="card-title"><span class="card-icon">📅</span> المتابعة</h3>
+          <div class="card-content" id="followup-content"></div>
+        </div>
+
+        <div class="summary-actions">
+          <button class="btn btn-outline" id="listen-summary-btn">🔊 الاستماع للملخص (قريبًا)</button>
+          <button class="btn btn-primary" id="copy-btn">📋 نسخ النص</button>
+          <button class="btn btn-secondary" id="share-btn">📤 مشاركة</button>
+          <button class="btn btn-secondary" id="download-pdf-btn">📥 تحميل PDF</button>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-outline" id="back-home-summary">العودة للرئيسية</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="about-content">
+        <h2 class="section-title">عن هـَون</h2>
+
+        <div class="about-card">
+          <h3 class="card-title"><span class="card-icon">🎯</span> رسالتنا</h3>
+          <div class="card-content">
+            <p>
+              نسعى في هـَون إلى جعل تجربة الرعاية الصحية أكثر وضوحًا وطمأنينة، عبر تقديم ملخصات طبية مبسطة تساعد المرضى على فهم تفاصيل الزيارة الطبية والالتزام بالخطة العلاجية بسهولة.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <h3 class="card-title"><span class="card-icon">🤖</span> تقنيات الذكاء الاصطناعي</h3>
+          <div class="card-content">
+            <p>
+  يعتمد <strong>هَـون</strong> حاليًا على التقنيات المتقدمة المقدمة من <strong>شركة عِلم</strong>، وتحديداً نموذج اللغة الكبير <strong>Noha 2.0 (LLM)</strong>؛ لتحليل النصوص الطبية وتحويلها إلى ملخص منظم يشمل التشخيص، الأدوية، والتعليمات بدقة وعناية.
+</p>
+
+<p>
+  كما نهدف في المراحل القادمة إلى التوسع في استخدام منظومة نماذج <strong>عِلم</strong> بإضافة تقنيات <strong>ASR</strong> لتحويل الصوت إلى نص، و<strong>TTS</strong> لتحويل الملخصات إلى صوت، لضمان تجربة شاملة وسهلة الوصول لجميع فئات المستخدمين.
+</p>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <h3 class="card-title"><span class="card-icon">🚀</span> المرحلة الحالية</h3>
+          <div class="card-content">
+            <p>
+              هـَون في مرحلته الأولية حاليًا، مع تركيزنا على بناء تجربة فعالة وموثوقة للتلخيص الطبي الذكي، والتطوير المستمر لإضافة مزايا مستقبلية تعزز تجربة المستخدم.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-card">
+          <h3 class="card-title"><span class="card-icon">🏥</span> الجمهور المستهدف</h3>
+          <div class="card-content">
+            <p>
+              صُمم هـَون للمرضى وأسرهم، ولكل من يحتاج إلى فهم أفضل للتشخيص والخطة العلاجية والمتابعة الطبية، مع قابلية التوسع مستقبلًا لدعم الجهات الصحية ومقدمي الرعاية.
+            </p>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-outline" id="back-home-about">العودة للرئيسية</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="blob-1"></div>
+  <div class="blob-2"></div>
+  <div class="blob-3"></div>
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
