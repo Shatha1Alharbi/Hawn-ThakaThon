@@ -3,7 +3,7 @@ const API_KEY = "sk-F6keAXeUKjjBQIdh8homgg"; // مفتاحك الخاص
 
 let currentSummaryData = null;
 
-// --- Navigation Logic ---
+// --- التنبيهات (Toast Messages) ---
 function showToast(message, type = "success", duration = 3000) {
   const toast = document.getElementById("toast");
   if (!toast) return;
@@ -16,6 +16,7 @@ function showToast(message, type = "success", duration = 3000) {
   }, duration);
 }
 
+// --- التنقل (Navigation Logic) ---
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -85,7 +86,7 @@ function bindNavigation() {
   });
 }
 
-// --- Summary Rendering & Normalization ---
+// --- معالجة البيانات (Normalization) ---
 function normalizeSummaryData(data) {
   const clean = { diagnosis: [], medications: [], instructions: [], follow_up: [] };
   const allItems = Object.values(data ?? {}).flat().filter((item) => typeof item === "string" && item.trim().length > 2);
@@ -142,7 +143,7 @@ function formatSummaryForShare(data) {
   return ["🏥 ملخص الزيارة الطبية", "━".repeat(40), content, "━".repeat(40), "تم إنشاء هذا الملخص بواسطة منصة هَـون"].filter(Boolean).join("\n\n");
 }
 
-// --- API Integration (تم التعديل هنا ليعمل مباشرة) ---
+// --- الاتصال بـ API الذكاء الاصطناعي ---
 async function handleGenerateSummary() {
   const scenarioInput = document.getElementById("scenario-input");
   const text = scenarioInput?.value.trim();
@@ -188,7 +189,7 @@ async function handleGenerateSummary() {
   }
 }
 
-// --- Helpers & Actions ---
+// --- العمليات (Copy, Share, Download, Listen) ---
 async function copyToClipboard(text) {
   try {
     if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(text); return true; }
@@ -197,29 +198,39 @@ async function copyToClipboard(text) {
 }
 
 async function handleCopySummary() {
-  if (!currentSummaryData) return showToast("❌ لا توجد بيانات", "error");
+  if (!currentSummaryData) return showToast("❌ لا توجد بيانات للنسخ", "error");
   const copied = await copyToClipboard(formatSummaryForShare(currentSummaryData));
   showToast(copied ? "تم نسخ الملخص بنجاح ✅" : "❌ فشل النسخ", copied ? "success" : "error");
 }
 
 async function handleShareSummary() {
-  if (!currentSummaryData) return showToast("❌ لا توجد بيانات", "error");
+  if (!currentSummaryData) return showToast("❌ لا توجد بيانات لمشاركتها", "error");
   const shareData = { title: "ملخص هَـون", text: formatSummaryForShare(currentSummaryData), url: window.location.href };
   if (navigator.share) {
-    try { await navigator.share(shareData); showToast("✅ تم المشاركة!", "success"); } catch (e) { if (e.name !== "AbortError") console.error(e); }
-  } else { showToast("❌ المشاركة غير مدعومة", "info"); }
+    try { await navigator.share(shareData); showToast("✅ تم المشاركة بنجاح!", "success"); } catch (e) { if (e.name !== "AbortError") console.error(e); }
+  } else { showToast("❌ المشاركة غير مدعومة في هذا المتصفح", "info"); }
 }
 
 async function handleDownloadPdf() {
-  if (!currentSummaryData) return showToast("❌ لا توجد بيانات", "error");
-  window.print(); // طريقة سريعة للطباعة كـ PDF في المتصفح
+  if (!currentSummaryData) return showToast("❌ لا توجد بيانات لتحميلها", "error");
+  window.print();
 }
 
-// --- Start ---
+function handleListenSummary() {
+  if (!currentSummaryData) {
+    return showToast("❌ لا توجد بيانات للاستماع إليها", "error");
+  }
+  showToast("🔊 ميزة الاستماع الصوتي ستكون متاحة قريباً!", "info", 4000);
+}
+
+// --- تشغيل التطبيق (Initialization) ---
 document.addEventListener("DOMContentLoaded", () => {
   bindNavigation();
+  
+  // ربط الأزرار بالوظائف البرمجية
   document.getElementById("generate-btn")?.addEventListener("click", handleGenerateSummary);
   document.getElementById("copy-btn")?.addEventListener("click", handleCopySummary);
   document.getElementById("share-btn")?.addEventListener("click", handleShareSummary);
   document.getElementById("download-pdf-btn")?.addEventListener("click", handleDownloadPdf);
+  document.getElementById("listen-summary-btn")?.addEventListener("click", handleListenSummary);
 });
